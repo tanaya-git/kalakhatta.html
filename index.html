@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Kala Khatta: a slow-brewed black plum drink with rock salt and lime, bottled in glass.">
+<title>Kala Khatta | Slow-brewed black plum drink</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- Design tokens: change colours/fonts here ---------- */
+:root {
+  --night: #1B0825;   /* page background */
+  --plum: #34103F;    /* raised surfaces */
+  --ivory: #F4EBE3;   /* main text, light sections */
+  --mist: #CDB8C9;    /* secondary text */
+  --brass: #C8A27C;   /* accent: buttons, rules */
+  --display: "Rozha One", Georgia, serif;
+  --body: "Figtree", system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--body); background: var(--night); color: var(--ivory); line-height: 1.65; }
+:focus-visible { outline: 3px solid var(--brass); outline-offset: 3px; }
+a { color: inherit; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.narrow { max-width: 720px; }
+
+/* ---------- Type ---------- */
+h1, h2, h3, .logo { font-family: var(--display); font-weight: 400; }
+h1 { font-size: clamp(2.5rem, 6.4vw, 4.6rem); line-height: 1.06; letter-spacing: -.01em; }
+h2 { font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1.12; margin-bottom: 16px; }
+h3 { font-size: 1.4rem; }
+.lead { color: var(--mist); max-width: 52ch; margin-bottom: 40px; }
+section { padding: 96px 0; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-block; background: var(--brass); color: var(--night); border: 0; border-radius: 2px; padding: 15px 30px; font: 700 1rem var(--body); text-decoration: none; cursor: pointer; transition: background .2s; }
+.btn:hover { background: #dbb893; }
+.btn.sm { padding: 10px 18px; font-size: .92rem; }
+.ghost { display: inline-block; padding: 15px 8px; font-weight: 500; border-bottom: 1px solid var(--brass); text-decoration: none; margin-left: 18px; }
+
+/* ---------- Header ---------- */
+.topbar { background: var(--brass); color: var(--night); text-align: center; font-size: .9rem; font-weight: 500; padding: 6px 12px; }
+nav { position: sticky; top: 0; z-index: 10; background: rgba(27, 8, 37, .94); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(200, 162, 124, .25); }
+.bar { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.logo { font-size: 1.5rem; text-decoration: none; }
+.links { display: flex; align-items: center; gap: 30px; }
+.links a { text-decoration: none; font-weight: 500; color: var(--mist); }
+.links a:hover { color: var(--ivory); }
+#cartBtn { background: none; color: var(--ivory); border: 1px solid var(--brass); padding: 8px 18px; font: 500 .95rem var(--body); cursor: pointer; }
+#cartBtn span { display: inline-block; min-width: 22px; margin-left: 6px; background: var(--brass); color: var(--night); border-radius: 11px; font-weight: 700; text-align: center; }
+
+/* ---------- Hero ---------- */
+.hero { padding: 90px 0 100px; background: radial-gradient(ellipse at 75% 40%, var(--plum), var(--night) 65%); }
+.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 50px; align-items: center; }
+.hero p { color: var(--mist); font-size: 1.15rem; max-width: 46ch; margin: 24px 0 34px; }
+.facts { display: flex; gap: 34px; list-style: none; padding: 0; margin-top: 46px; padding-top: 24px; border-top: 1px solid rgba(200, 162, 124, .3); color: var(--mist); font-size: .92rem; }
+.facts strong { display: block; font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ivory); }
+.arch { border: 1px solid var(--brass); border-radius: 999px 999px 0 0; padding: 50px 20px 30px; background: linear-gradient(var(--plum), var(--night)); display: grid; place-items: center; animation: rise 1.2s ease-out both; }
+.hero-bottle { width: 62%; aspect-ratio: 200/330; filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .5)); }
+@keyframes rise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Story ---------- */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.split p { color: var(--mist); }
+.notes { margin-top: 28px; }
+.notes div { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(200, 162, 124, .3); }
+.notes dt { font-family: var(--display); font-size: 1.15rem; color: var(--brass); }
+.notes dd { margin: 0; color: var(--mist); }
+
+/* ---------- Light sections ---------- */
+.light { background: var(--ivory); color: var(--night); }
+.light .lead { color: #5a4260; }
+
+/* ---------- Products ---------- */
+.shop-head { margin-bottom: 40px; }
+.shop-head .lead { margin-bottom: 0; }
+.products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: stretch; }
+.product { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid #d9c3d4; border-radius: 10px; overflow: hidden; }
+.product.best { border: 2px solid var(--brass); }
+.pic { height: 290px; background: linear-gradient(#efe2ea, #dcc6d7); display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-end; gap: 10px 6px; padding: 24px 20px 0; }
+.pic .b1 { aspect-ratio: 200/330; flex: none; }
+.pic.one .b1 { height: 250px; }
+.pic.three .b1 { height: 146px; }
+.pic.six .b1 { height: 116px; }
+.info { padding: 22px 24px 0; flex: 1; }
+.meta { color: #5a4260; font-size: .95rem; margin: 2px 0 10px; }
+.desc { color: #5a4260; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 20px 24px 24px; padding-top: 16px; border-top: 1px solid #e3d3df; }
+.price { display: block; font-family: var(--display); font-size: 1.8rem; line-height: 1.1; }
+.per { font-size: .85rem; color: #5a4260; }
+.tag { position: absolute; top: 14px; left: 14px; z-index: 1; background: var(--night); color: var(--brass); font-size: .8rem; font-weight: 700; padding: 4px 10px; border-radius: 3px; }
+.light .btn { background: var(--night); color: var(--ivory); }
+.light .btn:hover { background: var(--plum); }
+
+/* ---------- Serve ---------- */
+.steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 30px; }
+.steps li { border-top: 1px solid var(--brass); padding-top: 18px; color: var(--mist); }
+.steps strong { display: block; font-family: var(--display); font-weight: 400; font-size: 1.4rem; color: var(--ivory); margin-bottom: 4px; }
+
+/* ---------- FAQ ---------- */
+details { border-top: 1px solid #cdb8c9; padding: 18px 0; }
+details:last-of-type { border-bottom: 1px solid #cdb8c9; }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; }
+summary::after { content: "+"; font-size: 1.4rem; line-height: 1; }
+details[open] summary::after { content: "−"; }
+details p { margin-top: 10px; color: #5a4260; }
+
+/* ---------- Forms ---------- */
+form { display: grid; gap: 16px; }
+label { display: grid; gap: 6px; font-weight: 500; font-size: .95rem; }
+input, textarea { font: inherit; color: var(--ivory); background: var(--plum); border: 1px solid rgba(200, 162, 124, .35); border-radius: 2px; padding: 12px 14px; }
+input:focus, textarea:focus { border-color: var(--brass); outline: none; }
+.err { color: #ff9c92; font-size: .88rem; min-height: 1.1em; }
+.ok { color: var(--brass); font-weight: 700; }
+
+footer { border-top: 1px solid rgba(200, 162, 124, .25); padding: 32px 0; color: var(--mist); font-size: .92rem; }
+.foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
+.foot .logo { color: var(--ivory); }
+
+/* ---------- Cart drawer ---------- */
+#scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 20; }
+#scrim.open { opacity: 1; pointer-events: auto; }
+#cart { position: fixed; top: 0; right: 0; height: 100%; width: min(410px, 100%); background: var(--night); border-left: 1px solid var(--brass); z-index: 30; padding: 24px; overflow-y: auto; transform: translateX(100%); transition: transform .3s; }
+#cart.open { transform: none; }
+#cart header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+#cart h2 { margin: 0; font-size: 1.7rem; }
+#closeCart { background: none; border: 0; color: var(--ivory); font-size: 2rem; cursor: pointer; line-height: 1; }
+.ship { font-size: .92rem; color: var(--mist); margin-bottom: 8px; }
+.bar-track { height: 4px; background: var(--plum); margin-bottom: 18px; }
+#shipBar { height: 100%; width: 0; background: var(--brass); transition: width .3s; }
+.item { display: flex; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(200, 162, 124, .25); }
+.qty { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.qty button { width: 28px; height: 28px; background: none; color: var(--ivory); border: 1px solid var(--brass); cursor: pointer; font-weight: 700; }
+.total { display: flex; justify-content: space-between; font-size: 1.25rem; padding: 18px 0; font-family: var(--display); }
+.empty { color: var(--mist); padding: 12px 0; }
+
+@media (max-width: 800px) {
+  section { padding: 64px 0; }
+  .hero-grid, .split, .products, .steps { grid-template-columns: 1fr; }
+  .arch { max-width: 320px; margin: 0 auto; }
+  .links .hide { display: none; }
+  .facts { gap: 20px; }
+  .notes div { grid-template-columns: 100px 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .arch { animation: none; }
+  #cart, #scrim, #shipBar { transition: none; }
+}
+
+/* ---------- Bottle polish ---------- */
+.hero-bottle { animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.arch { box-shadow: inset 0 -70px 90px -40px rgba(200, 162, 124, .18); }
+.pic .b1 { filter: drop-shadow(0 10px 12px rgba(52, 16, 63, .35)); }
+@media (prefers-reduced-motion: reduce) { .hero-bottle { animation: none; } }
+
+/* published-page safe areas */
+:root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-padding-top: calc(80px + env(safe-area-inset-top, 0px)); }
+nav { top: env(safe-area-inset-top, 0px); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night); }
+#cart { padding-top: calc(24px + env(safe-area-inset-top, 0px)); }
+</style>
+</head>
+<body>
+
+<!-- Reusable bottle drawing -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="glassG" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#2A0A35"/><stop offset=".28" stop-color="#6A2182"/>
+      <stop offset=".55" stop-color="#4A1259"/><stop offset="1" stop-color="#220729"/>
+    </linearGradient>
+    <linearGradient id="brassG" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#9C7650"/><stop offset=".35" stop-color="#EBD0AB"/>
+      <stop offset=".65" stop-color="#C8A27C"/><stop offset="1" stop-color="#8A6643"/>
+    </linearGradient>
+    <linearGradient id="labelG" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#FBF5EE"/><stop offset="1" stop-color="#E9DACB"/>
+    </linearGradient>
+    <radialGradient id="plumG" cx=".35" cy=".3" r=".8">
+      <stop offset="0" stop-color="#9B4DB3"/><stop offset="1" stop-color="#3A0F48"/>
+    </radialGradient>
+  </defs>
+  <symbol id="bottle" viewBox="0 0 200 330">
+    <ellipse cx="100" cy="324" rx="68" ry="6" fill="#000" fill-opacity=".35"/>
+    <path d="M84 14h32v48c0 14 42 30 42 72v168c0 14-10 24-24 24H66c-14 0-24-10-24-24V134c0-42 42-58 42-72z" fill="url(#glassG)" stroke="#C8A27C" stroke-width="2.5"/>
+    <path d="M60 128c4-16 18-24 26-34" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="4" stroke-linecap="round"/>
+    <path d="M52 142v26M52 284v20" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="6" stroke-linecap="round"/>
+    <path d="M90 24v32" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3" stroke-linecap="round"/>
+    <path d="M151 150v130" fill="none" stroke="#C8A27C" stroke-opacity=".3" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="74" cy="122" r="2.2" fill="#fff" fill-opacity=".3"/>
+    <circle cx="124" cy="140" r="1.6" fill="#fff" fill-opacity=".25"/>
+    <circle cx="112" cy="104" r="1.6" fill="#fff" fill-opacity=".25"/>
+    <circle cx="82" cy="152" r="1.3" fill="#fff" fill-opacity=".25"/>
+    <rect x="82" y="42" width="36" height="5" rx="1" fill="url(#brassG)"/>
+    <rect x="79" y="1" width="42" height="17" rx="3" fill="url(#brassG)"/>
+    <path d="M86 3v13M92 3v13M98 3v13M104 3v13M110 3v13M116 3v13" stroke="#6E4E2F" stroke-opacity=".35" stroke-width="1"/>
+    <rect x="82" y="17" width="36" height="5" fill="url(#brassG)"/>
+    <rect x="56" y="170" width="88" height="110" rx="4" fill="url(#labelG)"/>
+    <rect x="60" y="174" width="80" height="102" rx="2" fill="none" stroke="#C8A27C" stroke-width="1"/>
+    <circle cx="100" cy="192" r="8" fill="url(#plumG)"/>
+    <circle cx="97" cy="189" r="2" fill="#fff" fill-opacity=".5"/>
+    <path d="M100 184c2-5 7-6 10-5-1 4-5 6-10 5z" fill="#C8A27C"/>
+    <text x="100" y="220" text-anchor="middle" font-family="Rozha One, Georgia, serif" font-size="17" fill="#34103F">Kala</text>
+    <text x="100" y="240" text-anchor="middle" font-family="Rozha One, Georgia, serif" font-size="17" fill="#34103F">Khatta</text>
+    <line x1="78" y1="249" x2="122" y2="249" stroke="#C8A27C" stroke-width="1.2"/>
+    <text x="100" y="260" text-anchor="middle" font-family="Figtree, sans-serif" font-size="6" letter-spacing="1" fill="#34103F">SLOW BREWED</text>
+    <text x="100" y="270" text-anchor="middle" font-family="Figtree, sans-serif" font-size="8" fill="#34103F">200 ml</text>
+  </symbol>
+</svg>
+
+<div class="topbar">Free delivery on orders above ₹500</div>
+
+<nav>
+  <div class="wrap bar">
+    <a class="logo" href="#home">Kala Khatta</a>
+    <div class="links">
+      <a class="hide" href="#story">Story</a>
+      <a class="hide" href="#shop">Shop</a>
+      <a class="hide" href="#serve">How to serve</a>
+      <a class="hide" href="#faq">FAQ</a>
+      <button id="cartBtn" aria-label="Open cart">Cart <span id="count">0</span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>The taste of the gola cart, bottled properly.</h1>
+      <p>Black plum, kala namak and fresh lime, brewed slowly in small batches and sealed in glass. Nothing artificial, nothing rushed.</p>
+      <div class="actions">
+        <a class="btn" href="#shop">Shop the collection</a>
+        <a class="ghost" href="#story">Read our story</a>
+      </div>
+      <ul class="facts">
+        <li><strong>100%</strong> jamun pulp</li>
+        <li><strong>0</strong> artificial colour</li>
+        <li><strong>200 ml</strong> glass bottle</li>
+      </ul>
+    </div>
+    <div class="arch"><svg class="hero-bottle"><use href="#bottle"/></svg></div>
+  </div>
+</header>
+
+<section id="story">
+  <div class="wrap split">
+    <h2>Sweet, sour and a little salty, in that order.</h2>
+    <div>
+      <p>Kala khatta is the flavour of summer afternoons: shaved ice, dark syrup and a pinch of black salt. We make that syrup the long way, with ripe jamun pressed within hours of picking.</p>
+      <dl class="notes">
+        <div><dt>Jamun</dt><dd>Deep colour and a gentle tannic bite.</dd></div>
+        <div><dt>Kala namak</dt><dd>A savoury, slightly smoky finish.</dd></div>
+        <div><dt>Lime</dt><dd>Fresh juice for a bright, clean end.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="shop" class="light">
+  <div class="wrap">
+    <div class="shop-head">
+      <h2>The collection</h2>
+      <p class="lead">One bottle to try, or a pack to keep in the fridge. Every order ships cold-packed in glass.</p>
+    </div>
+    <div class="products">
+
+      <article class="product">
+        <div class="pic one"><svg class="b1"><use href="#bottle"/></svg></div>
+        <div class="info">
+          <h3>Single Bottle</h3>
+          <p class="meta">200 ml · serves one</p>
+          <p class="desc">The way to start. Chill it and pour over ice.</p>
+        </div>
+        <div class="row">
+          <div><span class="price">₹160</span><span class="per">per bottle</span></div>
+          <button class="btn sm" data-id="single" data-name="Single Bottle" data-price="160">Add to cart</button>
+        </div>
+      </article>
+
+      <article class="product">
+        <span class="tag">Save ₹31</span>
+        <div class="pic three"><svg class="b1"><use href="#bottle"/></svg><svg class="b1"><use href="#bottle"/></svg><svg class="b1"><use href="#bottle"/></svg></div>
+        <div class="info">
+          <h3>Pack of 3</h3>
+          <p class="meta">3 × 200 ml · serves three</p>
+          <p class="desc">Enough to share with friends or last you a week.</p>
+        </div>
+        <div class="row">
+          <div><span class="price">₹449</span><span class="per">₹150 per bottle</span></div>
+          <button class="btn sm" data-id="pack3" data-name="Pack of 3" data-price="449">Add to cart</button>
+        </div>
+      </article>
+
+      <article class="product best">
+        <span class="tag">Best value · Save ₹111</span>
+        <div class="pic six"><svg class="b1"><use href="#bottle"/></svg><svg class="b1"><use href="#bottle"/></svg><svg class="b1"><use href="#bottle"/></svg><svg class="b1"><use href="#bottle"/></svg><svg class="b1"><use href="#bottle"/></svg><svg class="b1"><use href="#bottle"/></svg></div>
+        <div class="info">
+          <h3>Pack of 6</h3>
+          <p class="meta">6 × 200 ml · serves six</p>
+          <p class="desc">Our everyday pack for the fridge, and the lowest price per bottle.</p>
+        </div>
+        <div class="row">
+          <div><span class="price">₹849</span><span class="per">₹142 per bottle</span></div>
+          <button class="btn sm" data-id="pack6" data-name="Pack of 6" data-price="849">Add to cart</button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="serve">
+  <div class="wrap">
+    <h2>How to serve</h2>
+    <ol class="steps">
+      <li><strong>Chill</strong> the bottle for at least two hours.</li>
+      <li><strong>Pour</strong> over crushed ice in a tall glass.</li>
+      <li><strong>Finish</strong> with a lime wedge and a pinch of black salt.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="faq" class="light">
+  <div class="wrap narrow">
+    <h2>Questions</h2>
+    <details><summary>How long does a bottle last?</summary><p>Unopened, nine months in a cool place. Once opened, keep it in the fridge and finish within seven days.</p></details>
+    <details><summary>Is it sweet?</summary><p>It is balanced. The sourness and salt keep it from tasting heavy.</p></details>
+    <details><summary>Where do you deliver?</summary><p>Across India. Metro cities take two to three days.</p></details>
+    <details><summary>Can I order in bulk for an event?</summary><p>Yes. Write to us below with your date and quantity.</p></details>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap split">
+    <div>
+      <h2>Write to us</h2>
+      <p>Bulk orders, events, or just a question. We reply within a day.</p>
+    </div>
+    <form id="contactForm" novalidate>
+      <label>Name <input id="cName" type="text" autocomplete="name"><span class="err"></span></label>
+      <label>Email <input id="cEmail" type="email" autocomplete="email"><span class="err"></span></label>
+      <label>Message <textarea id="cMsg" rows="4"></textarea><span class="err"></span></label>
+      <button class="btn" type="submit">Send message</button>
+      <p class="ok" id="contactOk" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="logo">Kala Khatta</span>
+    <span>© 2026 Kala Khatta. Preview: orders and messages are not saved here.</span>
+  </div>
+</footer>
+
+<div id="scrim"></div>
+<aside id="cart" aria-label="Shopping cart">
+  <header><h2>Your cart</h2><button id="closeCart" aria-label="Close cart">×</button></header>
+  <p class="ship" id="shipMsg"></p>
+  <div class="bar-track"><div id="shipBar"></div></div>
+  <div id="items"></div>
+  <div class="total"><span>Total</span><span id="total">₹0</span></div>
+  <form id="orderForm" novalidate>
+    <label>Name <input id="oName" type="text" autocomplete="name"><span class="err"></span></label>
+    <label>Phone <input id="oPhone" type="tel" inputmode="numeric" autocomplete="tel"><span class="err"></span></label>
+    <label>Delivery address <textarea id="oAddr" rows="3"></textarea><span class="err"></span></label>
+    <button class="btn" type="submit">Place order</button>
+    <p class="ok" id="orderOk" role="status"></p>
+  </form>
+</aside>
+
+<script>
+/* ---------- Helpers ---------- */
+const $ = (s) => document.querySelector(s);
+const money = (n) => "₹" + n.toLocaleString("en-IN");
+const FREE_SHIP = 500;
+
+/* ---------- Cart (saved in the browser so it survives a refresh) ---------- */
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem("kk-cart")) || {}; } catch (e) { cart = {}; }
+
+function save() {
+  try { localStorage.setItem("kk-cart", JSON.stringify(cart)); } catch (e) {}
+}
+
+function renderCart() {
+  const ids = Object.keys(cart);
+  let total = 0, count = 0;
+
+  $("#items").innerHTML = ids.length
+    ? ids.map((id) => {
+        const it = cart[id];
+        total += it.price * it.qty;
+        count += it.qty;
+        return `<div class="item">
+          <div><strong>${it.name}</strong>
+            <div class="qty">
+              <button data-act="minus" data-id="${id}" aria-label="Remove one">−</button>
+              <span>${it.qty}</span>
+              <button data-act="plus" data-id="${id}" aria-label="Add one">+</button>
+            </div>
+          </div>
+          <strong>${money(it.price * it.qty)}</strong>
+        </div>`;
+      }).join("")
+    : '<p class="empty">Your cart is empty. Add a bottle from the collection.</p>';
+
+  $("#total").textContent = money(total);
+  $("#count").textContent = count;
+
+  // free delivery progress
+  const left = FREE_SHIP - total;
+  $("#shipBar").style.width = Math.min(100, (total / FREE_SHIP) * 100) + "%";
+  $("#shipMsg").textContent = total === 0
+    ? "Free delivery on orders above " + money(FREE_SHIP)
+    : left > 0 ? "Add " + money(left) + " more for free delivery" : "You’ve unlocked free delivery";
+
+  save();
+}
+
+function openCart(open) {
+  $("#cart").classList.toggle("open", open);
+  $("#scrim").classList.toggle("open", open);
+}
+
+document.querySelectorAll("[data-price]").forEach((btn) =>
+  btn.addEventListener("click", () => {
+    const { id, name, price } = btn.dataset;
+    cart[id] = cart[id] || { name, price: Number(price), qty: 0 };
+    cart[id].qty++;
+    renderCart();
+    openCart(true);
+  })
+);
+
+$("#items").addEventListener("click", (e) => {
+  const { act, id } = e.target.dataset;
+  if (!act) return;
+  cart[id].qty += act === "plus" ? 1 : -1;
+  if (cart[id].qty <= 0) delete cart[id];
+  renderCart();
+});
+
+$("#cartBtn").onclick = () => openCart(true);
+$("#closeCart").onclick = () => openCart(false);
+$("#scrim").onclick = () => openCart(false);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") openCart(false); });
+
+/* ---------- Form validation ---------- */
+function check(input, ok, msg) {
+  input.nextElementSibling.textContent = ok ? "" : msg;
+  return ok;
+}
+
+/* ---------- Talk to the backend ---------- */
+async function post(url, data) {
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const body = await res.json();
+    return res.ok ? { ok: true, body } : { ok: false, error: body.error || "Something went wrong." };
+  } catch (e) {
+    const t = Object.values(cart).reduce((s, i) => s + i.price * i.qty, 0); return { ok: true, body: { orderId: "PREVIEW (not saved)", total: t } };
+  }
+}
+
+$("#orderForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("#orderOk").textContent = "";
+  const a = check($("#oName"), $("#oName").value.trim().length >= 2, "Enter your name.");
+  const b = check($("#oPhone"), /^[6-9]\d{9}$/.test($("#oPhone").value.trim()), "Enter a 10-digit mobile number.");
+  const c = check($("#oAddr"), $("#oAddr").value.trim().length >= 10, "Enter your full delivery address.");
+  if (!Object.keys(cart).length) { $("#orderOk").textContent = "Add at least one item first."; return; }
+  if (!(a && b && c)) return;
+
+  const result = await post("/api/orders", {
+    name: $("#oName").value.trim(),
+    phone: $("#oPhone").value.trim(),
+    address: $("#oAddr").value.trim(),
+    items: Object.entries(cart).map(([id, it]) => ({ id, qty: it.qty })),
+  });
+
+  if (result.ok) {
+    $("#orderOk").textContent = "Order #" + result.body.orderId + " placed. Total " + money(result.body.total) + ".";
+    cart = {};
+    renderCart();
+    e.target.reset();
+  } else {
+    $("#orderOk").textContent = result.error;
+  }
+});
+
+$("#contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("#contactOk").textContent = "";
+  const a = check($("#cName"), $("#cName").value.trim().length >= 2, "Enter your name.");
+  const b = check($("#cEmail"), /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#cEmail").value), "Enter a valid email.");
+  const c = check($("#cMsg"), $("#cMsg").value.trim().length >= 10, "Write at least 10 characters.");
+  if (!(a && b && c)) return;
+
+  const result = await post("/api/messages", {
+    name: $("#cName").value.trim(),
+    email: $("#cEmail").value.trim(),
+    message: $("#cMsg").value.trim(),
+  });
+
+  if (result.ok) {
+    $("#contactOk").textContent = "Message sent. We’ll reply within a day.";
+    e.target.reset();
+  } else {
+    $("#contactOk").textContent = result.error;
+  }
+});
+
+renderCart();
+</script>
+</body>
+</html>
